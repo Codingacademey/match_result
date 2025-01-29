@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MatchAlign - Your Pair</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ff7eb3, #ff758c);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #fff;
+        }
+        .container {
+            background: linear-gradient(to bottom, #ff94c2, #ff5c98);
+            border-radius: 15px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            padding: 25px;
+            max-width: 400px;
+            text-align: center;
+        }
+        .pair-box {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .box {
+            background: #fff;
+            color: #ff5c98;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .relation {
+            margin-top: 15px;
+            font-size: 16px;
+            font-style: italic;
+            color: #fff;
+        }
+        .suggestions {
+            margin-top: 20px;
+            color: #fff;
+            font-size: 16px;
+        }
+        .suggestions ul {
+            list-style: none;
+            padding: 0;
+        }
+        .suggestions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>MatchAlign</h1>
+    <div class="container">
+        <div class="pair-box">
+            <div class="box" id="girl-name">Loading...</div>
+            <div class="box" id="boy-name">Loading...</div>
+        </div>
+        <div class="relation" id="relation-message">Loading relation...</div>
+        <div class="suggestions" id="suggestions">Loading suggestions...</div>
+    </div>
+
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function displayPair() {
+            const username = getQueryParam('username');
+            const girlBox = document.getElementById('girl-name');
+            const boyBox = document.getElementById('boy-name');
+            const relationMessage = document.getElementById('relation-message');
+            const suggestionsDiv = document.getElementById('suggestions');
+
+            if (!username) {
+                girlBox.textContent = 'Invalid';
+                boyBox.textContent = 'Invalid';
+                relationMessage.textContent = 'Invalid request. Please try again.';
+                return;
+            }
+
+            const pairs = {
+                'Laiba': ['Husnain', 'Mutahir'],
+                'Husnain': ['Laiba'],
+                'Hiba':['ALi ','Dawood'],
+                'Ali':['Hiba'],
+                'Dawood':['Hiba'],
+                'Ashifa ':[' abdullah'],
+                ' abdullah':['Ashifa '],
+                'Zaynab ':['M.talha 062','Huzaifa'],
+                'M.talha 062':['Zaynab '],
+                'Huzaifa':['Zaynab '],
+                 'Tooba':['Muneeb','Salman'] ,
+                 'Muneeb':['Tooba'],
+                 'Salman':['Tooba'],
+                 'Sehrish':['Baqir'],
+                 'Baqir':['Sehrish'],
+                 'Hamna':['Zaid','Bilal'],
+                 'Zaid':['Hamna'],
+                 'Bilal':['Hamna'],
+                  'Rayyan':[' Shifa'],
+                 'Hanya':['Fareed','Saad'],
+                 'Fareed':['Hanya'],
+                 'Saad':['Hanya'],
+                 'Kinza':['Sohaib','muzamil'],
+                 'Sohaib':['Kinza'],
+                 'Muzamil':['Kinza'],
+                 'Amna':['Abdulrehman','Hassan','Abdullahshahbaz'],
+                 'Abdulrehman':['Amna'],
+                 'Hassan':['Amna'],
+                 'Abdullahshahbaz':['Amna'],
+                 'Emaan':['Shahzaib'],
+                 'Shahzaib':['Emaan'],
+                 'Ibtisam':[' you have no pair'],
+                 'Memona':['Haris','Aftab'],
+                 'Haris':['Mona'],
+                 'Aftab':['Memona'],
+                 'Musa':[' you have no pair'],
+                 'Shifa':['Jamshaid','Azeem'],
+                 'Jamshaid':['Shifa'],
+                 'Azeem':['Shifa'],
+                 'Talha':[' you have no pair'],
+                'Sehrish':['Tasmeet','Hanan'],
+                'Tasmeet':['Sehrish'],
+                'Hanan':['Sehrish'],
+
+
+
+
+            };
+
+            if (pairs[username]) {
+                girlBox.textContent = username;
+                boyBox.textContent = pairs[username][0];
+
+                relationMessage.textContent = `${username} is matched with ${pairs[username][0]} based on compatibility.`;
+
+                // Display suggestions if more than one pair exists
+                if (pairs[username].length > 1) {
+                    suggestionsDiv.innerHTML = '<strong>Other suggestions:</strong><ul>' + 
+                        pairs[username].slice(1).map(pair => `<li>${username} vs ${pair}</li>`).join('') +
+                        '</ul>';
+                } else {
+                    suggestionsDiv.textContent = '';
+                }
+            } else {
+                girlBox.textContent = username;
+                boyBox.textContent = 'No Match';
+                relationMessage.textContent = `Sorry, no pair found for ${username}.`;
+                suggestionsDiv.textContent = '';
+            }
+        }
+
+        // Execute displayPair on page load
+        displayPair();
+    </script>
+</body>
+</html>
+
